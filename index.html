@@ -11,243 +11,156 @@
       box-sizing: border-box;
     }
 
-    html {
-      -webkit-text-size-adjust: 100%;
-    }
-
     body {
       margin: 0;
-      font-family:
-        Arial,
-        "Noto Sans KR",
-        "Apple SD Gothic Neo",
-        sans-serif;
       background: #f5f5f5;
+      font-family: Arial, "Noto Sans KR", sans-serif;
       color: #222;
-    }
-
-    button,
-    input,
-    textarea {
-      font: inherit;
     }
 
     .container {
-      width: 100%;
-      max-width: 920px;
-      margin: 0 auto;
-      padding: 48px 20px 70px;
+      width: min(100% - 32px, 1000px);
+      margin: 50px auto;
     }
 
-    .header {
-      margin-bottom: 30px;
-    }
-
-    .header h1 {
-      margin: 0 0 10px;
-      font-size: 32px;
-      line-height: 1.3;
-    }
-
-    .header p {
-      margin: 0;
-      color: #777;
-      font-size: 16px;
-      line-height: 1.6;
-    }
-
-    .template-selector {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-bottom: 28px;
-    }
-
-    .template-btn {
-      width: 100%;
-      min-height: 86px;
-      padding: 18px 12px;
-      border: 2px solid #ddd;
-      border-radius: 14px;
-      background: white;
-      color: #222;
-      font-size: 17px;
-      font-weight: 700;
-      cursor: pointer;
-      transition:
-        border-color 0.2s,
-        background 0.2s,
-        color 0.2s,
-        transform 0.2s;
-    }
-
-    .template-btn:hover {
-      border-color: #ff7a00;
-      transform: translateY(-1px);
-    }
-
-    .template-btn.active {
-      border-color: #ff7a00;
-      background: #fff7ef;
-      color: #e86800;
-    }
-
-    .form-card {
-      min-height: 300px;
-      padding: 34px;
-      background: white;
-      border-radius: 18px;
-      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
-    }
-
-    .empty-state {
-      min-height: 230px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #999;
-      text-align: center;
-      font-size: 16px;
-    }
-
-    .section-title {
-      margin: 36px 0 20px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid #eee;
-      font-size: 20px;
-      font-weight: 700;
-    }
-
-    .section-title:first-child {
-      margin-top: 0;
-    }
-
-    .field {
-      margin-bottom: 23px;
-    }
-
-    label {
-      display: block;
+    h1 {
       margin-bottom: 8px;
-      font-weight: 700;
-      line-height: 1.5;
-    }
-
-    .optional {
-      margin-left: 4px;
-      color: #999;
-      font-size: 12px;
-      font-weight: 400;
+      font-size: 34px;
     }
 
     .description {
-      margin-bottom: 8px;
-      color: #888;
+      margin-bottom: 35px;
+      color: #666;
+      font-size: 16px;
+    }
+
+    .type-buttons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 30px;
+    }
+
+    .type-button {
+      padding: 24px;
+      border: 2px solid #ddd;
+      border-radius: 15px;
+      background: white;
+      font-size: 20px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .type-button:hover {
+      border-color: #ff9f43;
+    }
+
+    .type-button.active {
+      border-color: #ff9f43;
+      background: #fff7ef;
+    }
+
+    .form-box {
+      background: white;
+      border-radius: 20px;
+      padding: 35px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    }
+
+    .empty-message {
+      text-align: center;
+      padding: 70px 20px;
+      color: #999;
+    }
+
+    .field {
+      margin-bottom: 28px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .optional {
+      margin-left: 6px;
+      color: #aaa;
       font-size: 13px;
-      line-height: 1.6;
+      font-weight: 400;
+    }
+
+    .help {
+      color: #888;
+      margin: -3px 0 10px;
+      font-size: 14px;
     }
 
     input[type="text"],
-    textarea {
+    textarea,
+    select {
       width: 100%;
-      padding: 13px 14px;
+      padding: 15px;
       border: 1px solid #ddd;
-      border-radius: 9px;
-      outline: none;
+      border-radius: 10px;
+      font-size: 16px;
       background: white;
-      color: #222;
-      font-size: 15px;
-      transition: border-color 0.2s;
-    }
-
-    input[type="text"]:focus,
-    textarea:focus {
-      border-color: #ff7a00;
     }
 
     textarea {
-      min-height: 105px;
+      min-height: 120px;
       resize: vertical;
-      line-height: 1.6;
     }
 
     input[type="file"] {
       width: 100%;
-      padding: 16px;
-      border: 1px dashed #bbb;
-      border-radius: 9px;
+      padding: 18px;
+      border: 1px dashed #ccc;
+      border-radius: 10px;
       background: #fafafa;
-      color: #555;
     }
 
-    .submit-btn {
+    .submit-button {
       width: 100%;
-      margin-top: 28px;
-      padding: 17px;
-      border: 0;
-      border-radius: 11px;
-      background: #ff7a00;
+      padding: 20px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 12px;
+      background: #ffb36b;
       color: white;
-      font-size: 17px;
+      font-size: 20px;
       font-weight: 700;
       cursor: pointer;
-      transition: opacity 0.2s;
     }
 
-    .submit-btn:hover {
-      opacity: 0.92;
-    }
-
-    .submit-btn:disabled {
-      opacity: 0.55;
+    .submit-button:disabled {
+      opacity: 0.6;
       cursor: not-allowed;
     }
 
     .status {
-      margin-top: 18px;
       text-align: center;
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    .status.success {
-      color: #198754;
-    }
-
-    .status.error {
-      color: #c62828;
-    }
-
-    .status.loading {
-      color: #666;
+      margin-top: 18px;
+      color: #555;
     }
 
     @media (max-width: 700px) {
       .container {
-        padding: 26px 14px 50px;
+        width: min(100% - 20px, 1000px);
+        margin: 25px auto;
       }
 
-      .header h1 {
-        font-size: 25px;
-      }
-
-      .header p {
-        font-size: 14px;
-      }
-
-      .template-selector {
+      .type-buttons {
         grid-template-columns: 1fr;
-        gap: 10px;
       }
 
-      .template-btn {
-        min-height: 64px;
-        padding: 15px 10px;
+      .form-box {
+        padding: 22px;
       }
 
-      .form-card {
-        padding: 22px 18px;
-        border-radius: 14px;
+      h1 {
+        font-size: 27px;
       }
     }
   </style>
@@ -255,856 +168,494 @@
 
 <body>
 
-  <main class="container">
+<div class="container">
 
-    <header class="header">
-      <h1>우리주방그릇 콘텐츠 작성</h1>
-      <p>
-        작성할 콘텐츠를 선택하고 가지고 있는 정보만 입력해주세요.
-        모든 항목은 선택사항입니다.
-      </p>
-    </header>
+  <h1>우리주방그릇 콘텐츠 작성</h1>
 
+  <div class="description">
+    작성할 콘텐츠를 선택하고 가지고 있는 정보만 입력해주세요.
+  </div>
 
-    <section
-      class="template-selector"
-      aria-label="콘텐츠 종류 선택">
+  <div class="type-buttons">
+    <button
+      type="button"
+      class="type-button"
+      data-type="대표약력"
+    >
+      🏆 대표약력
+    </button>
 
-      <button
-        type="button"
-        class="template-btn"
-        data-template="대표약력">
-        🏆 대표약력
-      </button>
+    <button
+      type="button"
+      class="type-button"
+      data-type="도면"
+    >
+      📐 도면
+    </button>
 
-      <button
-        type="button"
-        class="template-btn"
-        data-template="도면">
-        📐 도면
-      </button>
+    <button
+      type="button"
+      class="type-button"
+      data-type="시공사례"
+    >
+      🔧 시공사례
+    </button>
+  </div>
 
-      <button
-        type="button"
-        class="template-btn"
-        data-template="시공사례">
-        🔧 시공사례
-      </button>
+  <div class="form-box" id="formContainer">
+    <div class="empty-message">
+      위에서 작성할 콘텐츠를 선택해주세요.
+    </div>
+  </div>
 
-    </section>
-
-
-    <section class="form-card">
-
-      <form
-        id="contentForm"
-        enctype="multipart/form-data">
-
-        <input
-          type="hidden"
-          id="templateType"
-          name="templateType"
-          value=""
-        />
-
-        <div id="dynamicForm">
-
-          <div class="empty-state">
-            위에서 작성할 콘텐츠를 선택해주세요.
-          </div>
-
-        </div>
-
-        <div
-          id="status"
-          class="status"
-          aria-live="polite">
-        </div>
-
-      </form>
-
-    </section>
-
-  </main>
+</div>
 
 
-  <script>
-    "use strict";
+<script>
+
+const webhookUrl =
+  "https://uri85222.app.n8n.cloud/webhook/wooriblog";
 
 
-    /*
-    ==========================================
-    n8n Webhook 주소
-    ==========================================
-
-    현재는 TEST 주소입니다.
-
-    테스트 완료 후 아래 주소를:
-
-    /webhook-test/wooriblog
-
-    에서
-
-    /webhook/wooriblog
-
-    로 바꾸면 됩니다.
-    */
-
-    const webhookUrl =
-      "https://uri85222.app.n8n.cloud/webhook/wooriblog";
+let currentTemplateType = "";
 
 
-    /*
-    ==========================================
-    대표약력 템플릿
-    ==========================================
-    */
+const templates = {
 
-    const profileTemplate = `
-
-      <div class="section-title">
-        대표약력
-      </div>
+  "대표약력": `
+    <form id="contentForm">
 
       <div class="field">
-        <label for="awardName">
+        <label>
           상장 이름
           <span class="optional">선택</span>
         </label>
-
         <input
-          id="awardName"
           type="text"
           name="상장 이름"
-          placeholder="예: 부산광역시장 표창"
+          placeholder="예: 경남도지사 표창"
         />
       </div>
 
-
       <div class="field">
-        <label for="awardStory">
+        <label>
           수상과 관련된 이야기
           <span class="optional">선택</span>
         </label>
 
-        <div class="description">
+        <div class="help">
           수상 배경, 당시 상황, 의미, 기억에 남는 이야기 등을 자유롭게 작성해주세요.
         </div>
 
         <textarea
-          id="awardStory"
           name="수상과 관련된 이야기"
-          placeholder="알고 있는 내용만 편하게 입력해주세요."
+          placeholder="예: 오랜 기간 경남·부산 지역에서 활동한 경험이 인정되어..."
         ></textarea>
       </div>
 
-
       <div class="field">
-        <label for="awardPhoto">
+        <label>
           상장 사진
           <span class="optional">선택</span>
         </label>
 
         <input
-          id="awardPhoto"
           type="file"
           name="상장 사진"
           accept="image/*"
         />
       </div>
 
-
-      <button
-        type="submit"
-        class="submit-btn">
-        대표약력 글 생성하기
-      </button>
-
-    `;
+      ${submitSection()}
+    </form>
+  `,
 
 
-    /*
-    ==========================================
-    도면 템플릿
-    ==========================================
-    */
-
-    const drawingTemplate = `
-
-      <div class="section-title">
-        도면 정보
-      </div>
+  "도면": `
+    <form id="contentForm">
 
       <div class="field">
-        <label for="drawingStore">
+        <label>
           지역 및 업장 이름
           <span class="optional">선택</span>
         </label>
 
         <input
-          id="drawingStore"
           type="text"
           name="지역 및 업장 이름"
-          placeholder="예: 부산 연제구 ○○돼지국밥"
+          placeholder="예: 부산 강서구 OO식당"
         />
       </div>
 
-
       <div class="field">
-        <label for="drawingFeature">
+        <label>
           도면 특이사항
           <span class="optional">선택</span>
         </label>
 
-        <div class="description">
-          동선, 공간 구조, 장비 배치, 현장 제약 등 도면에서 강조할 내용을 입력해주세요.
-        </div>
-
         <textarea
-          id="drawingFeature"
           name="도면 특이사항"
-          placeholder="예: 좁은 공간에서 조리 동선을 최대한 짧게 설계"
+          placeholder="예: 가로로 긴 주방 구조라 이동 동선을 짧게 설계함"
         ></textarea>
       </div>
 
-
-      <div class="section-title">
-        도면 사진
-      </div>
-
-
       <div class="field">
-        <label for="drawingPhoto1">
+        <label>
           도면 사진 1
           <span class="optional">선택</span>
         </label>
 
         <input
-          id="drawingPhoto1"
           type="file"
           name="도면 사진 1"
           accept="image/*"
         />
       </div>
 
-
       <div class="field">
-        <label for="drawingPhoto2">
+        <label>
           도면 사진 2
           <span class="optional">선택</span>
         </label>
 
-        <div class="description">
+        <div class="help">
           추가 도면이 있을 때만 첨부해주세요.
         </div>
 
         <input
-          id="drawingPhoto2"
           type="file"
           name="도면 사진 2"
           accept="image/*"
         />
       </div>
 
+      ${submitSection()}
+    </form>
+  `,
+
+
+  "시공사례": `
+    <form id="contentForm">
+
+      ${textField("업장 이름", "예: OO식당")}
+      ${textField("업종", "예: 한식당")}
+      ${textField("현장 위치", "예: 부산 해운대구")}
+
+      ${textAreaField(
+        "작업 유형",
+        "예: 신규 주방 시공, 리모델링, 장비 교체"
+      )}
+
+      ${textAreaField(
+        "기존 현장 문제점",
+        "기존 주방이나 공간에서 불편했던 점"
+      )}
+
+      ${textAreaField(
+        "고객 요청사항",
+        "고객이 요청한 내용"
+      )}
+
+      ${textAreaField(
+        "설치 납품한 제품",
+        "예: 냉장고, 작업대, 화구, 싱크대 등"
+      )}
+
+      ${textAreaField(
+        "이번현장 강조할 내용",
+        "이번 현장에서 특히 보여주고 싶은 부분"
+      )}
+
+      ${textAreaField(
+        "작업 후 고객 만족",
+        "고객 반응이나 만족 내용"
+      )}
+
+      ${textAreaField(
+        "기타 특이사항",
+        "그 밖에 기록할 내용"
+      )}
+
+      ${fileField("블로그 썸네일 사진")}
+      ${fileField("매장 외관 사진")}
+      ${fileField("시공 전 사진")}
+      ${fileField("시공 중 사진")}
+      ${fileField("도면")}
+      ${fileField("시공 후 사진")}
+      ${fileField("제품 설치 사진")}
+
+      ${submitSection()}
+    </form>
+  `
+};
+
+
+function textField(name, placeholder = "") {
+  return `
+    <div class="field">
+      <label>
+        ${name}
+        <span class="optional">선택</span>
+      </label>
+
+      <input
+        type="text"
+        name="${name}"
+        placeholder="${placeholder}"
+      />
+    </div>
+  `;
+}
+
+
+function textAreaField(name, placeholder = "") {
+  return `
+    <div class="field">
+      <label>
+        ${name}
+        <span class="optional">선택</span>
+      </label>
+
+      <textarea
+        name="${name}"
+        placeholder="${placeholder}"
+      ></textarea>
+    </div>
+  `;
+}
+
+
+function fileField(name) {
+  return `
+    <div class="field">
+      <label>
+        ${name}
+        <span class="optional">선택</span>
+      </label>
 
-      <button
-        type="submit"
-        class="submit-btn">
-        도면 글 생성하기
-      </button>
-
-    `;
-
-
-    /*
-    ==========================================
-    시공사례 템플릿
-    ==========================================
-    */
-
-    const constructionTemplate = `
-
-      <div class="section-title">
-        현장 기본 정보
-      </div>
-
-
-      <div class="field">
-        <label for="storeName">
-          업장 이름
-          <span class="optional">선택</span>
-        </label>
-
-        <input
-          id="storeName"
-          type="text"
-          name="업장 이름"
-          placeholder="예: ○○돼지국밥"
-        />
-      </div>
-
-
-      <div class="field">
-        <label for="businessType">
-          업종
-          <span class="optional">선택</span>
-        </label>
-
-        <input
-          id="businessType"
-          type="text"
-          name="업종"
-          placeholder="예: 돼지국밥 전문점"
-        />
-      </div>
-
-
-      <div class="field">
-        <label for="location">
-          현장 위치
-          <span class="optional">선택</span>
-        </label>
-
-        <input
-          id="location"
-          type="text"
-          name="현장 위치"
-          placeholder="예: 부산 연제구"
-        />
-      </div>
-
-
-      <div class="field">
-        <label for="workType">
-          작업 유형
-          <span class="optional">선택</span>
-        </label>
-
-        <input
-          id="workType"
-          type="text"
-          name="작업 유형"
-          placeholder="예: 신규 주방 설계 및 시공"
-        />
-      </div>
-
-
-      <div class="section-title">
-        현장 내용
-      </div>
-
-
-      <div class="field">
-        <label for="problem">
-          기존 현장 문제점
-          <span class="optional">선택</span>
-        </label>
-
-        <textarea
-          id="problem"
-          name="기존 현장 문제점"
-          placeholder="시공 전 현장의 문제점이나 불편했던 부분"
-        ></textarea>
-      </div>
-
+      <input
+        type="file"
+        name="${name}"
+        accept="image/*"
+      />
+    </div>
+  `;
+}
 
-      <div class="field">
-        <label for="request">
-          고객 요청사항
-          <span class="optional">선택</span>
-        </label>
-
-        <textarea
-          id="request"
-          name="고객 요청사항"
-          placeholder="고객이 특별히 요청했던 내용을 입력해주세요."
-        ></textarea>
-      </div>
-
-
-      <div class="field">
-        <label for="products">
-          설치 납품한 제품
-          <span class="optional">선택</span>
-        </label>
-
-        <textarea
-          id="products"
-          name="설치 납품한 제품"
-          placeholder="예: 냉장고, 화구, 작업대, 싱크대 등"
-        ></textarea>
-      </div>
-
-
-      <div class="field">
-        <label for="highlight">
-          이번 현장 강조할 내용
-          <span class="optional">선택</span>
-        </label>
-
-        <textarea
-          id="highlight"
-          name="이번 현장 강조할 내용"
-          placeholder="이번 작업에서 가장 보여주고 싶은 포인트"
-        ></textarea>
-      </div>
-
-
-      <div class="field">
-        <label for="satisfaction">
-          작업 후 고객 만족
-          <span class="optional">선택</span>
-        </label>
-
-        <textarea
-          id="satisfaction"
-          name="작업 후 고객 만족"
-          placeholder="작업 후 고객 반응이나 만족했던 부분"
-        ></textarea>
-      </div>
-
-
-      <div class="field">
-        <label for="notes">
-          기타 특이사항
-          <span class="optional">선택</span>
-        </label>
-
-        <textarea
-          id="notes"
-          name="기타 특이사항"
-          placeholder="글 작성에 참고할 추가 정보가 있다면 입력해주세요."
-        ></textarea>
-      </div>
-
-
-      <div class="section-title">
-        현장 사진
-      </div>
-
-
-      <div class="field">
-        <label for="thumbnail">
-          블로그 썸네일 사진
-          <span class="optional">선택</span>
-        </label>
-
-        <input
-          id="thumbnail"
-          type="file"
-          name="블로그 썸네일 사진"
-          accept="image/*"
-        />
-      </div>
-
-
-      <div class="field">
-        <label for="exterior">
-          매장 외관 사진
-          <span class="optional">선택</span>
-        </label>
-
-        <input
-          id="exterior"
-          type="file"
-          name="매장 외관 사진"
-          accept="image/*"
-        />
-      </div>
-
-
-      <div class="field">
-        <label for="before">
-          시공 전 사진
-          <span class="optional">선택</span>
-        </label>
-
-        <input
-          id="before"
-          type="file"
-          name="시공 전 사진"
-          accept="image/*"
-        />
-      </div>
-
-
-      <div class="field">
-        <label for="during">
-          시공 중 사진
-          <span class="optional">선택</span>
-        </label>
-
-        <input
-          id="during"
-          type="file"
-          name="시공 중 사진"
-          accept="image/*"
-        />
-      </div>
-
-
-      <div class="field">
-        <label for="constructionDrawing">
-          도면
-          <span class="optional">선택</span>
-        </label>
-
-        <input
-          id="constructionDrawing"
-          type="file"
-          name="도면"
-          accept="image/*"
-        />
-      </div>
-
-
-      <div class="field">
-        <label for="after">
-          시공 후 사진
-          <span class="optional">선택</span>
-        </label>
-
-        <input
-          id="after"
-          type="file"
-          name="시공 후 사진"
-          accept="image/*"
-        />
-      </div>
-
-
-      <div class="field">
-        <label for="installed">
-          제품 설치 사진
-          <span class="optional">선택</span>
-        </label>
-
-        <input
-          id="installed"
-          type="file"
-          name="제품 설치 사진"
-          accept="image/*"
-        />
-      </div>
-
-
-      <button
-        type="submit"
-        class="submit-btn">
-        시공사례 글 생성하기
-      </button>
-
-    `;
-
-
-    /*
-    ==========================================
-    템플릿 목록
-    ==========================================
-    */
-
-    const templates = {
-      "대표약력": profileTemplate,
-      "도면": drawingTemplate,
-      "시공사례": constructionTemplate
-    };
-
-
-    /*
-    ==========================================
-    DOM 요소
-    ==========================================
-    */
-
-    const templateButtons =
-      document.querySelectorAll(".template-btn");
-
-    const templateTypeInput =
-      document.getElementById("templateType");
-
-    const dynamicForm =
-      document.getElementById("dynamicForm");
-
-    const contentForm =
-      document.getElementById("contentForm");
-
-    const statusBox =
-      document.getElementById("status");
-
-
-    /*
-    ==========================================
-    콘텐츠 선택
-    ==========================================
-    */
-
-    templateButtons.forEach((button) => {
-
-      button.addEventListener(
-        "click",
-        () => {
-
-          const selectedType =
-            button.dataset.template;
-
-          if (!templates[selectedType]) {
-            console.error(
-              "알 수 없는 템플릿:",
-              selectedType
-            );
-
-            return;
+
+function submitSection() {
+  return `
+    <button
+      class="submit-button"
+      id="submitButton"
+      type="submit"
+    >
+      콘텐츠 생성 요청
+    </button>
+
+    <div
+      id="statusMessage"
+      class="status"
+    ></div>
+  `;
+}
+
+
+document
+  .querySelectorAll(".type-button")
+  .forEach(button => {
+
+    button.addEventListener(
+      "click",
+      function () {
+
+        currentTemplateType =
+          this.dataset.type;
+
+        document
+          .querySelectorAll(".type-button")
+          .forEach(btn =>
+            btn.classList.remove("active")
+          );
+
+        this.classList.add("active");
+
+        document.getElementById(
+          "formContainer"
+        ).innerHTML =
+          templates[currentTemplateType];
+
+        attachSubmitHandler();
+      }
+    );
+  });
+
+
+function attachSubmitHandler() {
+
+  const form =
+    document.getElementById("contentForm");
+
+  if (!form) return;
+
+  form.addEventListener(
+    "submit",
+    async function (event) {
+
+      event.preventDefault();
+
+      const submitButton =
+        document.getElementById(
+          "submitButton"
+        );
+
+      const statusMessage =
+        document.getElementById(
+          "statusMessage"
+        );
+
+      submitButton.disabled = true;
+      submitButton.textContent =
+        "전송 중입니다...";
+
+      statusMessage.textContent =
+        "n8n으로 정보를 전송하고 있습니다.";
+
+      try {
+
+        const formData =
+          new FormData();
+
+        formData.append(
+          "templateType",
+          currentTemplateType
+        );
+
+
+        const elements =
+          form.elements;
+
+
+        for (
+          let i = 0;
+          i < elements.length;
+          i++
+        ) {
+
+          const element =
+            elements[i];
+
+          if (!element.name) {
+            continue;
           }
 
-          templateTypeInput.value =
-            selectedType;
 
-          templateButtons.forEach(
-            (otherButton) => {
-              otherButton.classList.remove(
-                "active"
+          if (
+            element.type === "file"
+          ) {
+
+            if (
+              element.files &&
+              element.files.length > 0
+            ) {
+
+              formData.append(
+                element.name,
+                element.files[0]
               );
+            }
+
+          } else {
+
+            const value =
+              element.value.trim();
+
+            if (value !== "") {
+
+              formData.append(
+                element.name,
+                value
+              );
+            }
+          }
+        }
+
+
+        console.log(
+          "전송 templateType:",
+          currentTemplateType
+        );
+
+
+        for (
+          const pair of formData.entries()
+        ) {
+
+          console.log(
+            "FormData:",
+            pair[0],
+            pair[1]
+          );
+        }
+
+
+        const response =
+          await fetch(
+            webhookUrl,
+            {
+              method: "POST",
+              body: formData
             }
           );
 
-          button.classList.add(
-            "active"
+
+        if (!response.ok) {
+
+          throw new Error(
+            `HTTP ${response.status}`
           );
-
-          dynamicForm.innerHTML =
-            templates[selectedType];
-
-          clearStatus();
-
-          window.scrollTo({
-            top:
-              dynamicForm
-                .getBoundingClientRect()
-                .top +
-              window.scrollY -
-              30,
-            behavior: "smooth"
-          });
         }
-      );
-
-    });
 
 
-    /*
-    ==========================================
-    상태 메시지
-    ==========================================
-    */
-
-    function setStatus(
-      message,
-      type = ""
-    ) {
-
-      statusBox.textContent =
-        message;
-
-      statusBox.className =
-        "status";
-
-      if (type) {
-        statusBox.classList.add(
-          type
+        alert(
+          "콘텐츠 생성 요청이 완료되었습니다."
         );
+
+
+        statusMessage.textContent =
+          "전송이 완료되었습니다.";
+
+        submitButton.textContent =
+          "전송 완료";
+
+
+      } catch (error) {
+
+        console.error(
+          "n8n 전송 오류:",
+          error
+        );
+
+        alert(
+          "n8n 전송에 실패했습니다.\n\n" +
+          error.message
+        );
+
+        statusMessage.textContent =
+          "전송에 실패했습니다.";
+
+        submitButton.disabled =
+          false;
+
+        submitButton.textContent =
+          "다시 전송";
       }
+
     }
+  );
+}
 
-
-    function clearStatus() {
-
-      statusBox.textContent = "";
-
-      statusBox.className =
-        "status";
-    }
-
-
-    /*
-    ==========================================
-    제출 버튼 텍스트
-    ==========================================
-    */
-
-    function getSubmitButtonText(
-      templateType
-    ) {
-
-      if (
-        templateType ===
-        "대표약력"
-      ) {
-        return "대표약력 글 생성하기";
-      }
-
-      if (
-        templateType ===
-        "도면"
-      ) {
-        return "도면 글 생성하기";
-      }
-
-      if (
-        templateType ===
-        "시공사례"
-      ) {
-        return "시공사례 글 생성하기";
-      }
-
-      return "콘텐츠 생성하기";
-    }
-
-
-    /*
-    ==========================================
-    폼 제출 → n8n
-    ==========================================
-    */
-
-    contentForm.addEventListener(
-      "submit",
-      async (event) => {
-
-        event.preventDefault();
-
-        const selectedType =
-          templateTypeInput.value;
-
-        if (!selectedType) {
-
-          alert(
-            "먼저 콘텐츠 종류를 선택해주세요."
-          );
-
-          return;
-        }
-
-
-        const submitButton =
-          contentForm.querySelector(
-            ".submit-btn"
-          );
-
-
-        try {
-
-          if (submitButton) {
-
-            submitButton.disabled =
-              true;
-
-            submitButton.textContent =
-              "전송 중입니다...";
-          }
-
-
-          setStatus(
-            "n8n으로 정보를 전송하고 있습니다.",
-            "loading"
-          );
-
-
-          const formData =
-            new FormData(
-              contentForm
-            );
-
-
-          /*
-          templateType이 반드시
-          포함되도록 한 번 더 보장
-          */
-
-          formData.set(
-            "templateType",
-            selectedType
-          );
-
-
-          const response =
-            await fetch(
-              webhookUrl,
-              {
-                method: "POST",
-                body: formData
-              }
-            );
-
-
-          if (!response.ok) {
-
-            throw new Error(
-              "HTTP " +
-              response.status
-            );
-          }
-
-
-          setStatus(
-            "콘텐츠 생성 요청이 완료되었습니다.",
-            "success"
-          );
-
-
-          alert(
-            "콘텐츠 생성 요청이 완료되었습니다."
-          );
-
-
-        } catch (error) {
-
-          console.error(
-            "n8n 전송 오류:",
-            error
-          );
-
-
-          setStatus(
-            "전송 중 오류가 발생했습니다.",
-            "error"
-          );
-
-
-          alert(
-            "n8n 전송에 실패했습니다.\n\n" +
-            error.message
-          );
-
-
-        } finally {
-
-          if (submitButton) {
-
-            submitButton.disabled =
-              false;
-
-            submitButton.textContent =
-              getSubmitButtonText(
-                selectedType
-              );
-          }
-        }
-
-      }
-    );
-
-
-    /*
-    ==========================================
-    페이지 로드 확인
-    ==========================================
-    */
-
-    console.log(
-      "우리주방그릇 콘텐츠 작성 페이지 로드 완료"
-    );
-
-  </script>
+</script>
 
 </body>
 </html>
