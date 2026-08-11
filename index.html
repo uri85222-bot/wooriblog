@@ -1,661 +1,394 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>우리주방그릇 콘텐츠 작성</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      background: #f5f5f5;
-      font-family: Arial, "Noto Sans KR", sans-serif;
-      color: #222;
-    }
-
-    .container {
-      width: min(100% - 32px, 1000px);
-      margin: 50px auto;
-    }
-
-    h1 {
-      margin-bottom: 8px;
-      font-size: 34px;
-    }
-
-    .description {
-      margin-bottom: 35px;
-      color: #666;
-      font-size: 16px;
-    }
-
-    .type-buttons {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-bottom: 30px;
-    }
-
-    .type-button {
-      padding: 24px;
-      border: 2px solid #ddd;
-      border-radius: 15px;
-      background: white;
-      font-size: 20px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .type-button:hover {
-      border-color: #ff9f43;
-    }
-
-    .type-button.active {
-      border-color: #ff9f43;
-      background: #fff7ef;
-    }
-
-    .form-box {
-      background: white;
-      border-radius: 20px;
-      padding: 35px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-    }
-
-    .empty-message {
-      text-align: center;
-      padding: 70px 20px;
-      color: #999;
-    }
-
-    .field {
-      margin-bottom: 28px;
-    }
-
-    .field label {
-      display: block;
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-
-    .optional {
-      margin-left: 6px;
-      color: #aaa;
-      font-size: 13px;
-      font-weight: 400;
-    }
-
-    .help {
-      color: #888;
-      margin: -3px 0 10px;
-      font-size: 14px;
-    }
-
-    input[type="text"],
-    textarea,
-    select {
-      width: 100%;
-      padding: 15px;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      font-size: 16px;
-      background: white;
-    }
-
-    textarea {
-      min-height: 120px;
-      resize: vertical;
-    }
-
-    input[type="file"] {
-      width: 100%;
-      padding: 18px;
-      border: 1px dashed #ccc;
-      border-radius: 10px;
-      background: #fafafa;
-    }
-
-    .submit-button {
-      width: 100%;
-      padding: 20px;
-      margin-top: 20px;
-      border: none;
-      border-radius: 12px;
-      background: #ffb36b;
-      color: white;
-      font-size: 20px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .submit-button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
-    .status {
-      text-align: center;
-      margin-top: 18px;
-      color: #555;
-    }
-
-    @media (max-width: 700px) {
-      .container {
-        width: min(100% - 20px, 1000px);
-        margin: 25px auto;
-      }
-
-      .type-buttons {
-        grid-template-columns: 1fr;
-      }
-
-      .form-box {
-        padding: 22px;
-      }
-
-      h1 {
-        font-size: 27px;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-<div class="container">
-
-  <h1>우리주방그릇 콘텐츠 작성</h1>
-
-  <div class="description">
-    작성할 콘텐츠를 선택하고 가지고 있는 정보만 입력해주세요.
-  </div>
-
-  <div class="type-buttons">
-    <button
-      type="button"
-      class="type-button"
-      data-type="대표약력"
-    >
-      🏆 대표약력
-    </button>
-
-    <button
-      type="button"
-      class="type-button"
-      data-type="도면"
-    >
-      📐 도면
-    </button>
-
-    <button
-      type="button"
-      class="type-button"
-      data-type="시공사례"
-    >
-      🔧 시공사례
-    </button>
-  </div>
-
-  <div class="form-box" id="formContainer">
-    <div class="empty-message">
-      위에서 작성할 콘텐츠를 선택해주세요.
-    </div>
-  </div>
-
-</div>
-
-
 <script>
+/* =========================================================
+   우리주방그릇 → n8n 전송
+   - 일반 입력값 자동 수집
+   - 모든 사진을 photo_0, photo_1, photo_2... 로 통일
+   - 사진의 원래 항목명은 photoType_0, photoType_1... 로 전송
+   ========================================================= */
 
 const webhookUrl =
   "https://uri85222.app.n8n.cloud/webhook/wooriblog";
 
 
-let currentTemplateType = "";
+/* =========================================================
+   파일 항목의 표시 이름 찾기
 
+   예:
+   상장 사진
+   도면 사진 1
+   시공 전 사진
+   시공 후 사진
+   제품 설치 사진
+   ========================================================= */
 
-const templates = {
+function getPhotoType(input) {
 
-  "대표약력": `
-    <form id="contentForm">
+  // 1. data-label이 있으면 가장 먼저 사용
+  if (input.dataset.label) {
+    return input.dataset.label;
+  }
 
-      <div class="field">
-        <label>
-          상장 이름
-          <span class="optional">선택</span>
-        </label>
-        <input
-          type="text"
-          name="상장 이름"
-          placeholder="예: 경남도지사 표창"
-        />
-      </div>
+  // 2. name이 있으면 사용
+  if (input.name) {
+    return input.name;
+  }
 
-      <div class="field">
-        <label>
-          수상과 관련된 이야기
-          <span class="optional">선택</span>
-        </label>
+  // 3. id가 있으면 사용
+  if (input.id) {
 
-        <div class="help">
-          수상 배경, 당시 상황, 의미, 기억에 남는 이야기 등을 자유롭게 작성해주세요.
-        </div>
-
-        <textarea
-          name="수상과 관련된 이야기"
-          placeholder="예: 오랜 기간 경남·부산 지역에서 활동한 경험이 인정되어..."
-        ></textarea>
-      </div>
-
-      <div class="field">
-        <label>
-          상장 사진
-          <span class="optional">선택</span>
-        </label>
-
-        <input
-          type="file"
-          name="상장 사진"
-          accept="image/*"
-        />
-      </div>
-
-      ${submitSection()}
-    </form>
-  `,
-
-
-  "도면": `
-    <form id="contentForm">
-
-      <div class="field">
-        <label>
-          지역 및 업장 이름
-          <span class="optional">선택</span>
-        </label>
-
-        <input
-          type="text"
-          name="지역 및 업장 이름"
-          placeholder="예: 부산 강서구 OO식당"
-        />
-      </div>
-
-      <div class="field">
-        <label>
-          도면 특이사항
-          <span class="optional">선택</span>
-        </label>
-
-        <textarea
-          name="도면 특이사항"
-          placeholder="예: 가로로 긴 주방 구조라 이동 동선을 짧게 설계함"
-        ></textarea>
-      </div>
-
-      <div class="field">
-        <label>
-          도면 사진 1
-          <span class="optional">선택</span>
-        </label>
-
-        <input
-          type="file"
-          name="도면 사진 1"
-          accept="image/*"
-        />
-      </div>
-
-      <div class="field">
-        <label>
-          도면 사진 2
-          <span class="optional">선택</span>
-        </label>
-
-        <div class="help">
-          추가 도면이 있을 때만 첨부해주세요.
-        </div>
-
-        <input
-          type="file"
-          name="도면 사진 2"
-          accept="image/*"
-        />
-      </div>
-
-      ${submitSection()}
-    </form>
-  `,
-
-
-  "시공사례": `
-    <form id="contentForm">
-
-      ${textField("업장 이름", "예: OO식당")}
-      ${textField("업종", "예: 한식당")}
-      ${textField("현장 위치", "예: 부산 해운대구")}
-
-      ${textAreaField(
-        "작업 유형",
-        "예: 신규 주방 시공, 리모델링, 장비 교체"
-      )}
-
-      ${textAreaField(
-        "기존 현장 문제점",
-        "기존 주방이나 공간에서 불편했던 점"
-      )}
-
-      ${textAreaField(
-        "고객 요청사항",
-        "고객이 요청한 내용"
-      )}
-
-      ${textAreaField(
-        "설치 납품한 제품",
-        "예: 냉장고, 작업대, 화구, 싱크대 등"
-      )}
-
-      ${textAreaField(
-        "이번현장 강조할 내용",
-        "이번 현장에서 특히 보여주고 싶은 부분"
-      )}
-
-      ${textAreaField(
-        "작업 후 고객 만족",
-        "고객 반응이나 만족 내용"
-      )}
-
-      ${textAreaField(
-        "기타 특이사항",
-        "그 밖에 기록할 내용"
-      )}
-
-      ${fileField("블로그 썸네일 사진")}
-      ${fileField("매장 외관 사진")}
-      ${fileField("시공 전 사진")}
-      ${fileField("시공 중 사진")}
-      ${fileField("도면")}
-      ${fileField("시공 후 사진")}
-      ${fileField("제품 설치 사진")}
-
-      ${submitSection()}
-    </form>
-  `
-};
-
-
-function textField(name, placeholder = "") {
-  return `
-    <div class="field">
-      <label>
-        ${name}
-        <span class="optional">선택</span>
-      </label>
-
-      <input
-        type="text"
-        name="${name}"
-        placeholder="${placeholder}"
-      />
-    </div>
-  `;
-}
-
-
-function textAreaField(name, placeholder = "") {
-  return `
-    <div class="field">
-      <label>
-        ${name}
-        <span class="optional">선택</span>
-      </label>
-
-      <textarea
-        name="${name}"
-        placeholder="${placeholder}"
-      ></textarea>
-    </div>
-  `;
-}
-
-
-function fileField(name) {
-  return `
-    <div class="field">
-      <label>
-        ${name}
-        <span class="optional">선택</span>
-      </label>
-
-      <input
-        type="file"
-        name="${name}"
-        accept="image/*"
-      />
-    </div>
-  `;
-}
-
-
-function submitSection() {
-  return `
-    <button
-      class="submit-button"
-      id="submitButton"
-      type="submit"
-    >
-      콘텐츠 생성 요청
-    </button>
-
-    <div
-      id="statusMessage"
-      class="status"
-    ></div>
-  `;
-}
-
-
-document
-  .querySelectorAll(".type-button")
-  .forEach(button => {
-
-    button.addEventListener(
-      "click",
-      function () {
-
-        currentTemplateType =
-          this.dataset.type;
-
-        document
-          .querySelectorAll(".type-button")
-          .forEach(btn =>
-            btn.classList.remove("active")
-          );
-
-        this.classList.add("active");
-
-        document.getElementById(
-          "formContainer"
-        ).innerHTML =
-          templates[currentTemplateType];
-
-        attachSubmitHandler();
-      }
+    const label = document.querySelector(
+      `label[for="${input.id}"]`
     );
-  });
+
+    if (label) {
+      return label.innerText.trim();
+    }
+
+    return input.id;
+  }
+
+  return "사진";
+}
 
 
-function attachSubmitHandler() {
+/* =========================================================
+   폼 전송 함수
+   ========================================================= */
 
-  const form =
-    document.getElementById("contentForm");
+async function submitToN8n(event) {
 
-  if (!form) return;
+  event.preventDefault();
 
-  form.addEventListener(
-    "submit",
-    async function (event) {
+  const form = event.target;
 
-      event.preventDefault();
+  const submitButton =
+    form.querySelector('button[type="submit"]');
 
-      const submitButton =
-        document.getElementById(
-          "submitButton"
-        );
+  const originalButtonText =
+    submitButton ? submitButton.innerText : "";
 
-      const statusMessage =
-        document.getElementById(
-          "statusMessage"
-        );
+
+  try {
+
+    /* -----------------------------
+       버튼 상태 변경
+       ----------------------------- */
+
+    if (submitButton) {
 
       submitButton.disabled = true;
-      submitButton.textContent =
+
+      submitButton.innerText =
         "전송 중입니다...";
 
-      statusMessage.textContent =
-        "n8n으로 정보를 전송하고 있습니다.";
+    }
 
-      try {
 
-        const formData =
-          new FormData();
+    /* =====================================================
+       FormData 생성
+       ===================================================== */
+
+    const formData = new FormData();
+
+
+    /* =====================================================
+       1. 일반 텍스트 / select / textarea 수집
+       ===================================================== */
+
+    const fields = form.querySelectorAll(
+      'input:not([type="file"]):not([type="submit"]), textarea, select'
+    );
+
+
+    fields.forEach(field => {
+
+      if (!field.name) return;
+
+
+      /* checkbox */
+
+      if (field.type === "checkbox") {
+
+        if (field.checked) {
+
+          formData.append(
+            field.name,
+            field.value || "true"
+          );
+
+        }
+
+        return;
+
+      }
+
+
+      /* radio */
+
+      if (field.type === "radio") {
+
+        if (field.checked) {
+
+          formData.append(
+            field.name,
+            field.value
+          );
+
+        }
+
+        return;
+
+      }
+
+
+      /* 일반 입력 */
+
+      formData.append(
+        field.name,
+        field.value ?? ""
+      );
+
+    });
+
+
+    /* =====================================================
+       2. 사진 자동 수집
+
+       어떤 콘텐츠 종류든 관계없이:
+
+       photo_0
+       photo_1
+       photo_2
+       ...
+
+       로 통일한다.
+       ===================================================== */
+
+    const fileInputs =
+      form.querySelectorAll('input[type="file"]');
+
+
+    let photoIndex = 0;
+
+
+    fileInputs.forEach(input => {
+
+      if (!input.files) return;
+
+      if (input.files.length === 0) return;
+
+
+      const photoType =
+        getPhotoType(input);
+
+
+      Array.from(input.files).forEach(file => {
+
+
+        /* 실제 binary 파일 */
 
         formData.append(
-          "templateType",
-          currentTemplateType
+          `photo_${photoIndex}`,
+          file,
+          file.name
         );
 
 
-        const elements =
-          form.elements;
+        /* 사진 종류 */
+
+        formData.append(
+          `photoType_${photoIndex}`,
+          photoType
+        );
 
 
-        for (
-          let i = 0;
-          i < elements.length;
-          i++
-        ) {
+        /* 원본 파일명 */
 
-          const element =
-            elements[i];
-
-          if (!element.name) {
-            continue;
-          }
+        formData.append(
+          `photoName_${photoIndex}`,
+          file.name
+        );
 
 
-          if (
-            element.type === "file"
-          ) {
+        photoIndex++;
 
-            if (
-              element.files &&
-              element.files.length > 0
-            ) {
+      });
 
-              formData.append(
-                element.name,
-                element.files[0]
-              );
-            }
+    });
 
-          } else {
 
-            const value =
-              element.value.trim();
+    /* =====================================================
+       3. 총 사진 개수
+       ===================================================== */
 
-            if (value !== "") {
+    formData.append(
+      "photoCount",
+      String(photoIndex)
+    );
 
-              formData.append(
-                element.name,
-                value
-              );
-            }
-          }
-        }
 
+    /* =====================================================
+       DEBUG
+
+       F12 → Console에서
+       실제 전송 데이터를 확인할 수 있음
+       ===================================================== */
+
+    console.log(
+      "===== n8n 전송 시작 ====="
+    );
+
+
+    for (const [key, value] of formData.entries()) {
+
+      if (value instanceof File) {
 
         console.log(
-          "전송 templateType:",
-          currentTemplateType
+          key,
+          "FILE:",
+          value.name,
+          value.type,
+          value.size
         );
 
+      } else {
 
-        for (
-          const pair of formData.entries()
-        ) {
-
-          console.log(
-            "FormData:",
-            pair[0],
-            pair[1]
-          );
-        }
-
-
-        const response =
-          await fetch(
-            webhookUrl,
-            {
-              method: "POST",
-              body: formData
-            }
-          );
-
-
-        if (!response.ok) {
-
-          throw new Error(
-            `HTTP ${response.status}`
-          );
-        }
-
-
-        alert(
-          "콘텐츠 생성 요청이 완료되었습니다."
+        console.log(
+          key,
+          value
         );
 
-
-        statusMessage.textContent =
-          "전송이 완료되었습니다.";
-
-        submitButton.textContent =
-          "전송 완료";
-
-
-      } catch (error) {
-
-        console.error(
-          "n8n 전송 오류:",
-          error
-        );
-
-        alert(
-          "n8n 전송에 실패했습니다.\n\n" +
-          error.message
-        );
-
-        statusMessage.textContent =
-          "전송에 실패했습니다.";
-
-        submitButton.disabled =
-          false;
-
-        submitButton.textContent =
-          "다시 전송";
       }
 
     }
-  );
+
+
+    /* =====================================================
+       4. n8n Webhook 전송
+
+       중요:
+       Content-Type을 직접 넣지 않는다.
+
+       브라우저가 multipart/form-data와
+       boundary를 자동 생성해야 한다.
+       ===================================================== */
+
+    const response = await fetch(
+      webhookUrl,
+      {
+
+        method: "POST",
+
+        body: formData
+
+      }
+    );
+
+
+    /* =====================================================
+       5. HTTP 오류 처리
+       ===================================================== */
+
+    if (!response.ok) {
+
+      const errorText =
+        await response.text();
+
+      console.error(
+        "n8n 오류:",
+        response.status,
+        errorText
+      );
+
+
+      throw new Error(
+        `HTTP ${response.status}`
+      );
+
+    }
+
+
+    /* =====================================================
+       성공
+       ===================================================== */
+
+    console.log(
+      "===== n8n 전송 성공 ====="
+    );
+
+
+    alert(
+      "콘텐츠 생성 요청이 완료되었습니다."
+    );
+
+
+  } catch (error) {
+
+
+    console.error(
+      "n8n 전송 오류:",
+      error
+    );
+
+
+    alert(
+      "n8n 전송에 실패했습니다.\n\n" +
+      error.message
+    );
+
+
+  } finally {
+
+
+    /* 버튼 복구 */
+
+    if (submitButton) {
+
+      submitButton.disabled = false;
+
+      submitButton.innerText =
+        originalButtonText;
+
+    }
+
+  }
+
 }
 
-</script>
 
-</body>
-</html>
+/* =========================================================
+   페이지의 모든 form에 자동 적용
+
+   대표약력
+   도면
+   시공사례
+
+   어느 form이든 동일한 전송 방식을 사용한다.
+   ========================================================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+
+    const forms =
+      document.querySelectorAll("form");
+
+
+    forms.forEach(form => {
+
+      form.addEventListener(
+        "submit",
+        submitToN8n
+      );
+
+    });
+
+
+    console.log(
+      "우리주방그릇 n8n 전송 시스템 준비 완료"
+    );
+
+  }
+);
+
+</script>
